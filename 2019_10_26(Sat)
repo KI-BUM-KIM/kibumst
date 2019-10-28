@@ -1,0 +1,240 @@
+데이터정의어 DDL(DATE DEFINITION LANGUAGE)
+->DDL은 기본적으로 COMMIT을달고있다
+->DDL과DML을같이할때는 DML을먼저하고나서 하는것이좋다
+->!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!DML과 약어가 비슷해서 헷갈리므로, 면접때정말자주물어본다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+-DML과 DDL에대해 설명해주세요
+DML은 DATA MAUNPULATION LANGUAGE의 약자이고
+데이터 조작어라고하고,생성되어있는 테이블에 디이터를 새로집어넣거나(INSERT),
+수정하고나,삭제할때 사용합니다
+DML명령은 기본적으론 트랜잭션에 종속됩니다(말안해도됨)
+사용후에 COMMIT이나 ROLLBACK을 써야한다
+
+-DDL은 DATE Defination Language
+테이터 정의어라고 한다 
+데이터배이스에 여러 객체들을 생성,수정,삭제하는 명령어들로 구성된다
+테이블, 뷰 , 인덱스,시퀀스 등의 제어에 사용된다
+사용후기본적으로 자동COMMIT된다
+
+
+
+
+
+
+
+
+
+객체 데이터를 사용하기위해 큰도움을주는것둘
+USER_ 내가가지고있는것만
+ALL_  내가가지고있는것+사용허가받은것
+
+
+INDEX는 수백만건부터 효용이있음
+VIEW에 DML을 쓸수는 있지만 쓰지않는것이 좋다(데이터에 문제생길수가있음)
+
+
+ROWNUM : 의사열(pseudo column)
+-SELECT문을통해 결과로나온데이터들의 순서 번호
+
+
+압박면접을 빙자해서 갈구는 면접관이있는데 믿거하면됨
+---------------------------실습-------------------------------------------------------------------------------------------------------
+313P
+CREATE TABLE EMP_DDL(
+EMPNO	NUMBER(4),
+ENAME	VARCHAR2(10),
+JOB		VARCHAR2(9),
+MGR		NUMBER(4),
+HIREDATE DATE,
+SAL		NUMBER(7,2),
+COMM	NUMBER(7,2),
+DEPTNO	NUMBER(2)
+);
+DESC EMP_DDL;
+
+317P
+CREATE TABLE EMP_ALTER
+AS SELECT * FROM EMP;
+SELECT * FROM EMP_ALTER;
+
+318P
+ALTER TABLE EMP_ALTER
+ADD HP VARCHAR2(20);
+
+ALTER TABLE EMP_ALTER
+RENAME COLUMN HP TO TEL;
+SELECT * FROM EMP_ALTER;
+
+319P
+ALTER TABLE EMP_ALTER
+MODFIY EMPNO NUMBER(5);
+
+ALTER TABLE EMP_ALTER
+DROP COLUMN TEL;
+
+321P
+RENAME EMP_ALTER TO EMP_RENAME
+
+328P
+SELECT TABLE NAME
+FROM USER_TABLES;
+
+329P
+SELECT * FROM DBA_TABLES;
+
+334P
+SELECT * FROM USER_INDEXES;
+
+SELECT * FROM USER_IND_COLUMNS;
+
+336P
+CREATE INDEX IDX_EMP_SAL
+ON EMP(SAL);
+
+341P
+CREATE VIEW VW_EMP20
+AS(SELECT EMPNO,ENAME,JOB,DEPTNO
+	FROM EMP
+	WHERE DEPTNO=20);
+	
+	SELECT*FOM USER_VIEWS;
+
+344P
+SELECT ROWNUM, E.*
+FROM EMP E;
+
+345P
+SELECT ROWNUM, E.*
+FROM EMP EMP
+ORDER BY SAL DESC;
+
+346P
+SELECT ROWNUM, E.*
+FROM(SELECT *
+	 FROM EMP E
+     ORDER BY SAL DESC) E ;
+	 
+347P
+SELECT ROWNUM, E.*
+FROM (SELECT *
+	  FROM EMP E
+	  ORDER BY SAL DESC) E
+WHERE ROWNUM <=3;
+
+349P
+CREATE TABLE DEPT_SEQUENCE
+AS SELECT * FROM DEPTNO
+   WHERE 1<>1;
+SELECT * FROM DEPT_SEQUENCE;
+	  
+350P
+CREATE SEQUENCE SEQ_DEPT_SEQUENCE
+INCREMENT BY 10
+START WITH 10
+MAXVALUE 90
+MINVALUE 0
+NOCYCLE
+CACHE 2;
+
+SELECT * FROM USER_SEQUENCE;
+
+3555p
+cteate synonym e
+for emp;
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+JAVA 복습목록(다음주)
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+데이터타입,변수
+기본형 데이터타입, 참조형 데이터타입,
+클래스, 객체, 생성자
+메서드 개념,리턴타입, 입력파라미터(매개변수)
+기본형,참조형 리턴타입,
+메서드 오버로딩
+상속 + 오버라이딩
+캡슐화(패키지,임포트,private ,public, final,static)
+다형서(폴리몰피즘)
+추상메서드+추상클래스
+인터페이스
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+당장에 필요는없지만 언제가쓸꺼
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-i/o stream
+-netsork
+-thread
+
+추가로봐놓으면좋은거
+-collection api
+->arraylist
+
+자바 스테디셀러
+-자바정석
+-자바의신
+-소설같은자바
+-do it! java
+
+인강
+-생활코딩
+-인프런
+-유튜브
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

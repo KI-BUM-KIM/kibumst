@@ -1,0 +1,252 @@
+ORDER BY DEPTNO DESC,ENAME ASC;
+======================================================================================================
+125.P예제문
+
+01)
+SELECT*
+FROM EMP
+WHERE ENAME LIKE '%S'
+
+
+02)
+SELECT 
+
+03)
+집합연산자를 사용하지않는방식
+SELECT EMPNO,ENAME,JOB,SAL,DEPTNO
+FORM EMP
+WHERE DEPTNO IN(20,30)
+AND SAL>20000;
+
+04)
+SELECT*
+FROM EMP
+WHERE SAK NOT BTWEEN 2000 AND 3000;
+
+SELECT*
+FROM EMP
+WHERE SAL<2000
+OR	  SAL>3000;
+
+05)
+SELECT ENAME,EMPNO,SAL , DEPTNO 	
+
+06)
+적어야할께 복잡할때는 하나씩 짤라서 추가해본다
+
+
+
+
+
+
+
+
+
+======================================================================================================
+
+단일행함수,다중행함수(129.p~)
+매우중요!!!!!!!!!!!!
+
+======================================================================================================
+실습130.P
+SELECT ENAME, UPPER(ENAME), LOWER(ENAME), INITCAP(ENAME)
+FROM EMP;
+
+가상의 테이블
+//WHERE UPPER(board_content)LIKE UPPER('%ORACLE%')//
+
+132.P
+SELECT ENAME, LENGTH(ENAME)
+FROM EMP;
+
+133.P
+SELECT ENAME ,LENGTH(ENAME)
+FROM EMP
+WHERE LENGTH(ENAME)>=5;
+
+가상의테이블
+//WHERE LENGTH(CARD_NO)<= 16
+
+LENGTHB 는그냥읽어만볼것
+
+134.P
+SELECT JOB, SUBSTR(JOB, 1, 2),SUBSTR(JOB, 3, 2),SUBSTR(JOB, 5)
+FROM EMP;
+
+136.P
+SELECT JOB,
+		SUBSTR(JOB, -LENGTH(JOB)),
+		SUBSTR(JOB,-LENGTH(JOB),2)
+		SUBSTR(JOB,-3)
+FROM EMP;
+
+-강사가 직접 하나만듦
+SELECT ENAME, INSTR(ENAME, 'S')
+	FROM EMP;
+
+SELECT * 
+FROM EMP
+WHERE INSTR(ENAME, 'S')>0;
+
+140.P
+SELECT 'Oracle',
+		LPAD('Oracle',10, '#')AS LPAD_1,
+		LPAD('Oracle',10, '*')AS LPAD_1,
+		LPAD('Oracle',10)AS LPAD_2,
+		LPAD('Oracle',10)AS LPAD_2
+
+	FROM DUAL;
+	
+141.P
+SELECT
+	RPAD('971225-', 14, '*')AS RPAD_JMNO,
+	RPAD('010-1234-', 13, '*')AS RPAD_PHONE,
+FROM DUAL;
+
+심화
+SELECT 	RPAD(SUBSTR('971225-0002131',1,7),14,'*')AS RPAD_JMNO,
+		RPAD(SUBSTR('010-1234-4567',1,9),13,'*')AS RPAD_PHONE
+	FROM DUAL;
+
+
+SELECT	CONCAT(EMPNO,ENAME),
+		CONCAT(EMPNO,CONCAT(' : ',ENAME))
+   FROM EMP
+   WHERE ENAME = 'SCOTT';
+
+// ||를쓰면 CONCAT과비슷하게 열이나 문자열을 연결합니다
+
+SELECT TRIM(' ABC ')
+FROM DUAL;
+147.P
+SELECT	ROUND(1234.5678		) AS ROUND,
+		ROUND(1234.5678,	0)AS ROUND_0,
+		ROUND(1234.5678,	1)AS ROUND_1,
+		ROUND(1234.5678,	2)AS ROUND_2,
+		ROUND(1234.5678,	-1)AS ROUND_MINUS1,
+		ROUND(1234.5678,	-2)AS ROUND_MINUS1
+FROM DUAL;
+
+
+148.P
+SELECT	TRUNC(1234.5678		) AS TRUNC,
+		TRUNC(1234.5678,	0)AS TRUNC_0,
+		TRUNC(1234.5678,	1)AS TRUNC_1,
+		TRUNC(1234.5678,	2)AS TRUNC_2,
+		TRUNC(1234.5678,	-1)AS TRUNC_MINUS1,
+		TRUNC(1234.5678,	-2)AS RTRUNC_MINUS1
+FROM DUAL;
+
+날짜데이터를다루는 함수 중요!!!!!!!!!!(SQL이 가장 정확해서 가장많이쓰임)
+
+SELECT 	SYSDATE AS NOW,
+		SYSDATE -1 YSETRDAY,
+		SYSDATE +1 TOMRROW,
+		TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+ FROM DUAL;
+
+SELECT SYSDATE,
+		ADD_MONTHS(SYSDATE, 3)
+	FROM DUAL;
+
+153.P
+SELECT	EMPNO,ENAME,HIREDATE,SYSDATE,
+		MONTHS_BETWEEN(HIREDATE, SYSDATE)AS MONTHS1,
+		MONTHS_BETWEEN(SYSDATE, HIREDATE)AS MONTHS2,
+		TRUNC(MONTHS_BETWEEN(SYSDATE, HIREDATE))AS MONTHS3
+ FROM EMP;
+
+154.P
+SELECT	SYSDATE
+		NEXT_DAY(SYSDATE,'월요일'),
+		LAST_DAY(SYSDATE)
+	FROM DUAL;
+
+날짜반올림 버림은 복잡하여 잘쓰지않는다
+
+작은데이터 타입에서 큰데이터 타입으로 형변환을할때는 상관없지마
+큰탑이에서 작은타입으로 갈때는 형변환을 해야한다.(데이터유실이있을수있어 권장하지않음)
+
+오라클 형변화함수
+TO_CHAR : 날짜 타입의 데이터를 문자 데이터로 바꾸는함수!!!!!!!!(중요)
+************************TO_DATE : 문자 타입의 데이터를 날짜 데이터로 바꾸는함수!!!!!!!!)(중요)***************************
+
+159.P
+SELECT 	TO_CHAR(SYSDATE,'YYYY/MM/DD HH24:MI:SS')AS 현재날짜시간
+	FROM DUAL
+(결과값이 문자열이다(날짜아님))
+
+164.P
+SELECT 	TO_DATE('2018-07-14','YYYY-MM-DD')AS TODATE1,
+		TO_DATE('20180714','YYYY-MM-DD')AS TODATE2
+ FROM DUAL
+
+
+<!!!!!!!NULL!!!!!!!>
+NULL 관련 함수는 반드시기억할것
+167.P
+SELECT 	EMPNO,ENAME,SAL,COMM,SAL+COMM,
+		NVL(COMM,0),
+		SAL+NVL(COMM,0)
+ FROM EMP;
+
+169.P
+SELECT 	EMPNO, ENAME, COMM,
+		NVL2(COMM,'0','X'),
+		NVL2(COMM, SAL*12+COMM,SAL*12)AS ANNSAL
+ FROM EMP;		
+
+DOCODE함수와 CASE문
+
+170.P
+SELECT 	EMPNO, ENAME, JOB, SAL,
+		DECODE(	JOB,
+				'MANAGER',	SAL*1.1,
+				'SALESMAN',	SAL*1.05,
+				'ANALYST',	SAL,
+				SAL*1.03)AS UPSAL
+ FROM EMP;			
+//실행헀을때 데이터타입은 숫자이다
+//출력되는 데이터타입은 다같아야한다	
+			
+172.P		
+SELECT	EMPNO, ENAME, JOB, SAL,
+	CASE JOB
+		WHEN 'MANAGER' 	THEM SAL*1.1
+		WHEN 'SALESMAN' THEM SAL*105
+		WHEN 'ANALYST' 	THEM SAL
+		ELSE SAL*1.03
+	END AS UPSAL
+	FROM EMP;
+			
+173.P
+SELECT	EMPNO, ENAME, COMM,
+	CASE
+		WHEN COMM IS NULL	THEN'해당사항 없음'
+		WHEN COMM = 0  		THEN'수당 없음'
+		WHEN COMM > 0		THEN'수당 : ' || COMM
+	END AS COMM_TEXT
+	FROM EMP;
+// 기준이 없음 각WHEN절에 기반해서 알아서 처리한다
+//CASE문이 범용성이 더 넓음			
+			
+			
+			
+			
+
+<숙제>
+174~175.P
+174.P 3번문제 힌트 : TO_CHAR 를한번은써야한다
+
+
+
+
+
+
+
+
+
+
+
+
+

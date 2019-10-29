@@ -1,0 +1,252 @@
+제약조건 - 테이블의 특정칼럼에 저장될 데이터 기준을정해주는 규칙
+
+1)NOT NULL : 이 칼럼에는 NULL이 올술없다 (EX 가입시 필수항목)
+					컬럼들의 값이 중복되는것은 아무문제없음
+2)UNIQUE: 이 칼럼에는 중복된값은 올수없다
+			컬럼이값이NULL인경우에는 중복으로 치지않는다(NULL은 여러번올수있다)
+
+3)PRIMARY KEY: NOT NULL + UNIQUE 가장업격한 제약조건 커럼에 
+			   NULL도안되고,중복되안됨
+
+4)FOREIGN KEY ;외래키
+				다른테이블의 특정컬럼값을 참조하는 컬럼의 으미 참조하고있는 컬럼에 존재하지않는 데이터는 쓸수없음
+				예를들어
+				EMP테이블에서DEPT 테이블의DEPTNO에 존재하지않는 부서번호는 쓸수없음
+
+5)CHECK ; 어떤조건식을 만족하는 데이터만 저장가능하도락 하는 제약조건
+
+대부분의 제약조건은 테이블을 생성할때만 만든다
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------실습------------------------------------------------------------------------------------------																					
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+362P
+CREATE TABLE TABLE_NOTNULL(
+		LOGIN_ID 	VARCHAR2(20) NOT NULL,
+		LOGIN_PWD 	VARCHAR2(20) NOT NULL,
+		TEL 		VARCHAR2(20)
+		);    
+DESC TABLE_NOTNLL;
+
+2)
+INSERT INTO TABLE_NOTNULL(LOGIN_ID, LOGIN_PWD,TEL)
+VALUES ('TEST_ID_01',NULL,'010-1234-5678')
+
+363P
+INSERT INTO TABLE_NOTNULL(LOGIN_ID, LOGIN_PWD,TEL)
+VALUES ('TEST_ID_01',1234)
+
+2)
+UPDATE TABLE_NOTNULL
+SET LOGIN_PWD =NULL
+WHERE LOGIN_ID='TEST_ID_01';
+
+/*NOT NULL제약조건은 특정 컬럼에 NULL을 허가하지않는 제약조건이다
+ -INSERT문을 통해 NULL 을 집어넣는것은 불가능*/
+ -UPDATE문을 통해 원래 존재하던 데이터를 NULL로 바꾸는것도 불가능*/
+
+365P
+CREATE TABLE TABLE_NOTNULL2(
+		LOGIN_ID 	VARCHAR2(20) CONSTRAINT TBLNN2_LGNID_NN NOT NULL,
+		LOGIN_PWD 	VARCHAR2(20) CONSTRAINT TBLNN2_LGNPW_NN NOT NULL,
+		TEL			VARCHAR2(20)
+		);
+		
+370P
+CRAETE TABLE TABLE_UNIQUE(
+		LOGIN_ID 	VARCHAR2(20) UNIQUE,
+		LOGIN_PWD 	VARCHAR2(20) NOT NULL,
+		TEL			VARCHAR2(20) 
+		);
+		
+SELECT OWNER,CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME
+FROM USER_CONSTRAIMTS
+WHERE TABLE_NAME='TABLE_UNIQUE';
+
+317P
+INSERT INTO TABLE_UNIQUE(LOGIN_ID, LOGIN_PWD, TEL)
+VALUES('TEST_ID_01','PWD01','010-1234-5678');
+
+383P
+INSERT INTO EMP(EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO)
+VALUES(9999,'홍길동','CLERK','7788',TO_DATE('2017/04/30','YYYY/MM/DD'),1200,NULL,50);
+
+384P
+CREATE TABLE DEPT_FK(
+		DEPTNO NUMBER(2)CONSTRAINT DEPTFK_DEPTNO_PK PRIMARY KEY,
+		DNAME  VARCHAR2(14),
+		LOC	   VARCHAR2(13)
+		);
+		
+385P
+CREATE TABLE EMP_FK(
+		EMPNO		NUMBER(4) CONSTRAINT EMPFK_EMPNO_PK PRIMARY KEY,
+		ENAME		VARCHAR2(10),
+		JOB			VARCHAR2(9),
+		MGR			NUMBER(4),
+		HRIEDATE	DATE,
+		SAL			NUMBER(7,2),
+		COMM		NUMBER(7,2),
+		DEPTNO		NUMBER(2) CONSTRAINT EMPFK_DEPTNO_FK REFERENCES DEPT_FK(DEPTNO)
+		);
+
+386P
+INSERT INTO EMP_FK
+VALUES(9999,'TEST_NAME','TEST_JOB','7788',TO_DATE('2007/04/30','YYYY/MM/DD'),3000,NULL,10);		
+
+390P
+CREATE TABLE TABLE_CHECK(
+		LOGIN_ID 	VARCHAR2(20) CONSTRAINT TBLCK_LOGINID_PK PRIMARY KEY,
+		LOGIN_PWD 	VARCHAR2(20)CONSTRAINT TBLCK_LOGINPW_CK CHECK( LENGTH(LOGIN_PWD) > 3 ),
+		TEL 		VARCHAR2(20)
+	);
+
+##############################   예제 394P    ####################################################################################
+CREATE TABLE DEPT_CONST(
+        DEPTNO NUMBER(2)    CONSTRAINT DEPTCONST_DEPTNO_PK PRIMARY KEY,
+        DNAME  VARCHAR2(14) CONSTRAINT DEPTCONST_DNAME_UNQ UNIQUE,
+        LOC    VARCHAR2(13) CONSTRAINT DEPTCONST_LOC_NN NOT NULL
+        );
+
+
+CREATE TABLE EMP_CONST(
+        EMPNO    NUMBER(4)     CONSTRAINT EMPCONST_EMPNO_PK PRIMARY KEY,
+        ENMAE    VARCHAR2(10)  CONSTRAINT EMPCINST_ENAME_NN NOT NULL   ,
+        JOB      VARCHAR2(9)                                           ,
+        TEL      VARCHAR2(20)  CONSTRAINT EMPCONST_TEL_UNQ  UNIQUE     ,
+        HIREDATE DATE                                                  ,
+        SAL      NUMBER(7,2)   CONSTRAINT EMPCONST_SLA_CHK CHECK(SAL BETWEEN 1000 AND 9999),
+        COMM     NUMBER(7,2)                                           ,
+        DEPTNO   NUMBER(2)     CONSTRAINT EMPNOCOSNT_DEPTNO_FK REFERENCES DEPT_CONST(DEPTNO)
+        );
+
+SELECT TABLE_NAME, CONSTRAINT_NAME, CONSTRAINT_TYPE 
+  FROM USER_CONSTRAINTS 
+ WHERE TABLE_NAME IN ( 'EMP_CONST', 'DEPT_CONST' ) 
+ORDER BY CONSTRAINT_NAME; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

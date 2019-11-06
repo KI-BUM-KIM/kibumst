@@ -1,0 +1,431 @@
+=================================================================================================================================================================================
+post 방식 152p
+=================================================================================================================================================================================
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class PostServlet
+ */
+@WebServlet("/PostServlet")
+public class PostServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public PostServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		String name = request.getParameter("name");
+		
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>post Servlet</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<h2>");
+		out.println("name:["+ name +"]");
+		out.println("</h2><br/>");
+		out.println("</body>");
+		out.println("</html>");
+		
+	}
+
+}
+
+=================================================================================================================================================================================
+169p
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class ConditionSverlet
+ */
+@WebServlet("/ConditionSverlet")
+public class ConditionSverlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ConditionSverlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;chareset=utf-8");
+		
+		PrintWriter out = response.getWriter();
+		String meyhod = request.getParameter("method");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>Condition Servlet</title>");
+		out.println("</head>");
+		out.println("<body>");
+		if( method == null ){
+			
+		}
+		
+		
+	}
+
+}
+
+=================================================================================================================================================================================
+웹에스 폴더안에 항목하나하나는 웹어플리케이션이다
+42p
+아파치톰캣/bin/statrup.bat : 톰캣 수동으로실행하는 프로그램
+아파치톰캣/bin/shutdown.bat:톰캣을 수동으로 종료하는프로그램
+
+wep inf,meta inf,       두개파일을빼고 나머지파일은 들어가져있다
+
+
+최근추세에는 보안적인 이유로  wep inf안에 jsp를 숨겨놓는 경우가많다
+
+리퀘스트에 있는 메소드들은 다get메소드다
+
+노출되도 상관이없는것은 get으로 해도상관없다
+
+144p
+별도의 별다른 지장없이 request가 사용되면http사용방식은 get방식이다(defaul가 get방식) 
+받아오는것은 문자열
+
+
+================================================================================================================================================================================
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class LoopServlet
+ */
+@WebServlet("/LoopServlet")
+public class LoopServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoopServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		
+		PrintWriter out = response.getWriter();
+		int num = Integer.parseInt(request.getParameter("num"));
+		
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>LoopServlet</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<h2>"+num+"단출력<h2>");
+		out.println("<table border=\"1\">");
+		out.println("<tr><th>계산</th><th>결과</th></tr>");
+		
+		for(int i=1; i<=9; i++){
+			out.println("<tr>");
+			out.println("<td width=\"80\"align=\"center\">");
+			out.println(num + "X" + i);
+			out.println("</td>");
+			out.println("<td width=\"50\" align=\"center\">");
+			out.println(num*i);
+			out.println("</td>");
+			out.println("</tr>");
+		}
+		
+			out.println("</table>");
+			out.println("</body>");
+			out.println("</html>");
+		
+		
+	}
+
+}
+
+
+
+
+
+
+========================================================================================================================================================================
+179p
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class MutipleParameterServlet
+ */
+@WebServlet("/MutipleParameterServlet")
+public class MutipleParameterServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MutipleParameterServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html/;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String[] hobby = request.getParameterValues("hobby");
+		
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>MutipleParameteServlet</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("결과<hr>");
+		
+		if(hobby == null ){
+			out.println("<html>");
+		}
+		else{
+			out.println("<table border=\"1\">");
+			for(int i =0; i<bobby.length>; i++){
+				out.println("<tr>");
+				out.println("<td width=\"80\" align=\"center\">");
+				out.println("<tr>");
+				out.println("<tr>");
+				out.println("<tr>");
+				
+				
+			}
+		}
+		
+		
+	}
+
+}
+
+========================================================================================================================================================================
+숙제
+156~167p까지 읽어보고 풀어보자
+
+182p~183p 책에 답은 저작권이 걸려있다
+
+제출해주는 숙제를 학인하고 정답으로 충분하다고 느껴지는 코드를 나중에 책반정도 배우고나서
+한꺼번에 구글드라이브 공유드리겠습니다.
+
+3장,구글드라이브 ppt파일 !공부!
+8챕터 까지는 정답 공개안함
+=======================================================================================================================================================================
+
+웹프로그램밍 실무에서 가장까다로운 문제는 !!!한글처리!!!
+
+한글처리할때는
+
+커넥터에 URINEncoding ="UTF-8"을 추가한다
+
+
+
+
+
+
+
+
+
+
+
+
+웹에스 폴더안에 항목하나하나는 웹어플리케이션이다
+42p
+아파치톰캣/bin/statrup.bat : 톰캣 수동으로실행하는 프로그램
+아파치톰캣/bin/shutdown.bat:톰캣을 수동으로 종료하는프로그램
+
+wep inf,meta inf,       두개파일을빼고 나머지파일은 들어가져있다
+
+
+최근추세에는 보안적인 이유로  wep inf안에 jsp를 숨겨놓는 경우가많다
+
+리퀘스트에 있는 메소드들은 다get메소드다
+
+노출되도 상관이없는것은 get으로 해도상관없다
+
+144p
+별도의 별다른 지장없이 request가 사용되면http사용방식은 get방식이다(defaul가 get방식) 
+받아오는것은 문자열
+
+
+
+
+
+
+
+
+
+
+
+============================
+3장,구글드라이브 ppt파일 !공부!
+============================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

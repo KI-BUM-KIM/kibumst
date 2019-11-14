@@ -1,0 +1,165 @@
+jsp(Java Server Page)
+-HTML사이사이에 필요한 자바코드를삽입
+하지마 실행하기위해서 JSP는 결국
+JAVA 클래스의형태로 변환 ->컴파일해서 CLASS파일로실행
+JSP 기술역시 Servlet 기술과 동일한 기술을 사용하고있다
+
+jsp는<%%>묶여있으면 다 자바코드다
+
+194p
+contentType 항상씀
+import
+errorPage증요
+isErrorPage중요
+session 매우중요
+
+JSP 스크립팅3요소
+
+1.스크립틀릿
+	jps 페이지 안에서 필요한 자바코드를 삽이하기위해 사용 
+	jsp에 직접삽입해야할때는 사용되는 일종의 코드블록이
+	스키립틀릿안에 작성된 자바코드는 jsp페이지가 변환된 자바파일안에 _jspService method 그대로삽입됨
+	-그러므로 jsp 페이지 내에서 스크립틀릭안에서 선언된변수는 전부 지역변수다
+
+
+2.표현식
+	java문법을 사용하여, 어떤값을 html로 바로출력하기위해 사용되는스킬립틀릿과는 달리 세미콜론(;)을 쓰지않는다
+
+3.선언문
+	만들어진 선언문은  JSPservice method와 동급취급이되어 위치에 상관이없이 작동(?)한다
+
+
+219p
+내장객체
+	-jspService() method 내부에서 선언되어 jsp페이지에서는 선언없이 사용할수있는특수한객체다
+	jspService() method 내부에서 선언되어있기 때문에 외부 즉 선언문같은데에서는 사용할수없다 
+	-session 정말 매우중요함 (로그인,아웃을 시킬수가있다)
+	-내장객체는 스키립틀릿과 표현식에서만쓸수있다
+	-선언문에서는 사용이불가하다
+====================================================================================================================================================================
+
+숙제 216p
+
+====================================================================================================================================================================
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>inclued 속성예제</title>
+</head>
+<body>
+	
+		<%@ include file="includeHTML.html"%>
+		<h1>Hellow!include</h1>
+		<%@ include file="includedJSP.jsp" %>	
+</body>
+</html>
+
+======================================================================================================================================================================
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%! 
+	String hello="Hellow!";
+	String world="World!";
+	
+	public int add(int a, int b){
+		return a+b;
+	}
+%>
+
+<html>
+<head>
+<title>Declration 에제</title>
+</head>
+	<body>
+		<%int num =add(2,3); %>	
+		<%=num %>번 반복합니다<br/>
+		<% 
+			for(int i=1;i<num;i++){
+		%>
+			<%=hello %><%=world %><br/>
+		<% 
+			}
+		%>		
+	</body>
+</html>
+======================================================================================================================================================================
+
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
+<% 
+	Date today=new Date();
+	SimpleDateFormat date= new SimpleDateFormat("YYYY");
+	int num=5;
+%>
+<h3>현재연도는<%=date.format(today)%>입니다.<br/> 
+	<%=num%>년후의 연도는 <%=num+Integer.parseInt(date.format(today)) %>년입니다
+</h3>
+
+
+======================================================================================================================================================================
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<html>
+<head>
+<title>제어문을 사용한 Scriptle예제</title>
+</head>
+<body>
+	<%
+		int num= Integer.parseInt(request.getParameter("num"));
+		String hello="Hello!";
+		String world="World!";
+	
+		for(int i=1;i<=num;i++){
+			
+			out.print("<h"+i+">"+hello+""+world+"</h>"+i+">");
+			if(i==num){
+	%>	
+			<h1>스클립틀릿 내 for문의마지막수행입니다.</h1>
+	<% 		
+			}else{
+	%> 
+			<h1>스클립틀릿 내 for문수행중입니다.</h1>
+	<%	
+			}
+		}
+	%>
+
+</body>
+</html>
+======================================================================================================================================================================
+<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<html>
+<head>
+<title>구구단 출력 1</title>
+</head>
+<body>
+	<h1>구구단 출력</h1>
+	
+		
+		<table border=1 >
+			<tr>
+				<th>2단</th>
+				<th>3단</th>
+				<th>4단</th>
+				<th>5단</th>
+				<th>6단</th>
+				<th>7단</th>
+				<th>8단</th>
+				<th>9단</th>		
+			</tr>
+		
+	<% 
+		for(int i=1; i<=9 ;i++){
+			out.write("<tr>");
+			for(int j=2; j<=9;j++ ){
+				out.write("<td>+");
+			}
+			out.write("</tr>")
+		}
+	%>
+	</table>
+	
+	
+</body>
+</html>
